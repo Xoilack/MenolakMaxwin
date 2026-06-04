@@ -3,6 +3,76 @@ layout: default
 permalink: /ID-id/home
 ---
 
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js"></script>
+
+<script>
+// Firebase configuration dari _config.yml
+const firebaseConfig = {
+    apiKey: "{{ site.API_KEY }}",
+    authDomain: "{{ site.AUTH_DOMAIN }}",
+    databaseURL: "{{ site.DATABASE_URL }}",
+    projectId: "{{ site.PROJECT_ID }}",
+    storageBucket: "{{ site.STORAGE_BUCKET }}",
+    messagingSenderId: "{{ site.SENDER_ID }}",
+    appId: "{{ site.APP_ID }}",
+    measurementId: "{{ site.MEASUREMENT_ID }}"
+};
+
+// Initialize Firebase
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+
+// Check if user is logged in
+firebase.auth().onAuthStateChanged(function(user) {
+    if (!user) {
+        window.location.href = '/login';
+    }
+});
+
+// Function to get user balance from localStorage
+function getUserBalance(email) {
+    const users = JSON.parse(localStorage.getItem('demoSlotUsers') || '{}');
+    return users[email]?.balance || 0;
+}
+
+// Function to update user balance
+function updateUserBalance(email, newBalance) {
+    const users = JSON.parse(localStorage.getItem('demoSlotUsers') || '{}');
+    if (users[email]) {
+        users[email].balance = newBalance;
+        users[email].lastActive = new Date().toISOString();
+        localStorage.setItem('demoSlotUsers', JSON.stringify(users));
+    }
+}
+
+// Play game function
+function playGame(gameName, betAmount = 1000) {
+    const user = firebase.auth().currentUser;
+    if (!user) {
+        window.location.href = '/login';
+        return;
+    }
+    
+    const balance = getUserBalance(user.email);
+    if (balance < betAmount) {
+        alert(`Saldo tidak mencukupi! Minimal Rp ${betAmount.toLocaleString()}`);
+        return;
+    }
+    
+    // Deduct bet amount
+    const newBalance = balance - betAmount;
+    updateUserBalance(user.email, newBalance);
+    
+    // Here you can add game logic
+    alert(`Memainkan ${gameName} dengan taruhan Rp ${betAmount.toLocaleString()}\nSisa saldo: Rp ${newBalance.toLocaleString()}`);
+    
+    // Refresh page to show updated balance
+    location.reload();
+}
+</script>
+
 <style>
 .page-load-status {
   display: none;
@@ -11,39 +81,102 @@ permalink: /ID-id/home
   text-align: center;
   color: #777;
 }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.border-card {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.border-card:hover {
+  transform: translateY(-5px);
+}
+
+.first-row {
+  position: relative;
+  height: 200px;
+}
+
+.company {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.img-linear {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.5));
+  z-index: 1;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.more-button {
+  margin: 20px auto;
+  display: block;
+}
 </style>
 
 <div class="grid-container">
   {% for item in site.data.slots %}
-	<ion-card class="border-card post">
-<ion-grid v-for="(item, index) in data" style="padding:0;">
-			<ion-row class="first-row">
-				<div class="company">
-					{{ item.title }}
-				</div>
-                <div class="img-linear"></div>
-				<div class="img" style="background-image:url({{item.cover}})" ></div>
-			</ion-row>
-	<ion-row>
-	
-<ion-col>
-  <ion-item lines="none">
-    <ion-avatar aria-hidden="true" slot="start">
-                <img class="logo" src="{{item.logo}})"/>
-					</ion-avatar>
-	
-                    <ion-buttons slot="end">
-                        <ion-button size="large" onclick="pageSlots{{forloop.index}}()">
-                            <ion-icon aria-hidden="true" color="success" slot="icon-only" name="play-circle"></ion-icon>
-                        </ion-button>
-                    </ion-buttons>
-</ion-item>
-				</ion-col>
-			</ion-row>
-		</ion-grid>
-	</ion-card>
+  <ion-card class="border-card post">
+    <ion-grid style="padding:0;">
+      <ion-row class="first-row">
+        <div class="company">
+          {{ item.title }}
+        </div>
+        <div class="img-linear"></div>
+        <div class="img" style="background-image:url({{item.cover}})" ></div>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item lines="none">
+            <ion-avatar aria-hidden="true" slot="start">
+              <img class="logo" src="{{item.logo}}"/>
+            </ion-avatar>
+            <ion-buttons slot="end">
+              <ion-button size="large" onclick="playGame('{{item.title}}', 1000)">
+                <ion-icon aria-hidden="true" color="success" slot="icon-only" name="play-circle"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
   {% endfor %}
 </div>
+
 <div class="page-load-status">
   <div class="loader-ellips infinite-scroll-request">
     <span class="loader-ellips__dot"></span>
@@ -54,6 +187,11 @@ permalink: /ID-id/home
   <p class="infinite-scroll-last">End of content</p>
   <p class="infinite-scroll-error">No more pages to load</p>
 </div>
+
 <p style="margin:auto;width:fit-content;">
-<ion-button class="more-button">View more</ion-button>
+  <ion-button class="more-button">View more</ion-button>
 </p>
+
+<!-- Ionicons script -->
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
