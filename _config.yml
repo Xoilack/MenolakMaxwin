@@ -1,51 +1,47 @@
 #
-dev: nobody
+dev: false
 
-name: Demo Slot
+name: Demo Slot Admin Panel
 
-description: Slot demo gacor melatih pola permainan
+description: Panel admin untuk mengatur saldo demo slot
 
 poster: /assets/images/dafftube.png
 
 avatar: /assets/images/logo_img.png
 
-iklanVideo: https://www.xnxx.com/embedframe/ubuhvlb115b
-
 disqus:
 
-google_analytics: G-MBYBX123VX
+google_analytics: 
 
-url: http://zxbook.online/
+url: http://localhost:4000/
 
 baseurl: ""
 
-permalink: /ID-id/:title
+permalink: /:title
 
 version: v1.0.0
 
 kramdown:
-
   input: GFM
-
   syntax_highlighter: rouge
   syntax_highlighter_opts:
-
     css_class: 'highlight'
 
 sass:
   style: :expanded
 
-# Google Auth
-WA_KEY: 0000000000
-SITE_KEY: 6Lf93BUqAAAAAKdOAUYBkBNrQkMz11AYtp-CcYsO
-API_KEY: AIzaSyDDYUQN0NsDWYoMSLV4To7JzBjlA0cdHQY
-AUTH_DOMAIN: xoilack-maxwin.firebaseapp.com
-DATABASE_URL: https://xoilack-maxwin-default-rtdb.firebaseio.com
-PROJECT_ID: xoilack-maxwin
-STORAGE_BUCKET: xoilack-maxwin.appspot.com
-SENDER_ID: 996735481902
-APP_ID: 1:996735481902:web:79ab0ffb9a58db1d4e07bf
-MEASUREMENT_ID: G-ZNRMZ2QVVZ
+# Admin Credentials (Ubah sesuai keinginan)
+ADMIN_USERNAME: admin
+ADMIN_PASSWORD_HASH: 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8 # SHA256 dari "password"
+
+# Firebase Config (Ganti dengan config asli Anda)
+API_KEY: YOUR_API_KEY
+AUTH_DOMAIN: YOUR_AUTH_DOMAIN
+DATABASE_URL: YOUR_DATABASE_URL
+PROJECT_ID: YOUR_PROJECT_ID
+STORAGE_BUCKET: YOUR_STORAGE_BUCKET
+SENDER_ID: YOUR_SENDER_ID
+APP_ID: YOUR_APP_ID
 
 plugins:
   - jekyll-sitemap
