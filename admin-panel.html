@@ -305,14 +305,15 @@ permalink: /admin-panel
     </div>
     
     <script>
+        const BASE_URL = '{{ site.baseurl }}' || '';
         // Check authentication
         function checkAuth() {
             const isLoggedIn = sessionStorage.getItem('adminLoggedIn');
             const loginTime = sessionStorage.getItem('adminLoginTime');
             
             if (!isLoggedIn || !loginTime) {
-                window.location.href = '/login';
-                return false;
+            window.location.href = BASE_URL + '/login';
+            return false;
             }
             
             // Session timeout after 8 hours
@@ -324,9 +325,9 @@ permalink: /admin-panel
             return true;
         }
         
-        function logout() {
-            sessionStorage.clear();
-            window.location.href = '/login';
+         function logout() {
+        sessionStorage.clear();
+        window.location.href = BASE_URL + '/login';
         }
         
         function showAlert(message, type = 'success') {
