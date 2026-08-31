@@ -144,7 +144,7 @@ permalink: /login
                 // Set session
                 sessionStorage.setItem('adminLoggedIn', 'true');
                 sessionStorage.setItem('adminLoginTime', Date.now());
-                window.location.href = '/admin-panel';
+                window.location.href = '{{ site.baseurl }}/admin-panel';
             } else {
                 document.getElementById('errorMsg').style.display = 'block';
                 setTimeout(() => {
