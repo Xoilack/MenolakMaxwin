@@ -27,7 +27,7 @@ if (!firebase.apps.length) {
 // Check if user is logged in
 firebase.auth().onAuthStateChanged(function(user) {
     if (!user) {
-        window.location.href = '/login';
+        window.location.href = '{{ site.baseurl }}/login';
     }
 });
 
@@ -51,7 +51,7 @@ function updateUserBalance(email, newBalance) {
 function playGame(gameName, betAmount = 1000) {
     const user = firebase.auth().currentUser;
     if (!user) {
-        window.location.href = '/login';
+        window.location.href = '{{ site.baseurl }}/login';
         return;
     }
     
