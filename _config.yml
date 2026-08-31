@@ -13,7 +13,7 @@ disqus:
 
 google_analytics: 
 
-url: http://localhost:4000/
+url: http://xoilack.github.io/MenolakMaxwin/
 
 baseurl: ""
 
@@ -32,16 +32,16 @@ sass:
 
 # Admin Credentials (Ubah sesuai keinginan)
 ADMIN_USERNAME: admin
-ADMIN_PASSWORD_HASH: 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8 # SHA256 dari "password"
+ADMIN_PASSWORD_HASH: bee5688aea66a47460b19c76f8f199c6b9585eb726f8322b1429793863609ca2 # SHA256 dari "password"
 
 # Firebase Config (Ganti dengan config asli Anda)
-API_KEY: YOUR_API_KEY
-AUTH_DOMAIN: YOUR_AUTH_DOMAIN
-DATABASE_URL: YOUR_DATABASE_URL
-PROJECT_ID: YOUR_PROJECT_ID
-STORAGE_BUCKET: YOUR_STORAGE_BUCKET
-SENDER_ID: YOUR_SENDER_ID
-APP_ID: YOUR_APP_ID
+API_KEY: AIzaSyC8t5BHqXv24QZced_CIPjPmkMIYeJxpso
+AUTH_DOMAIN: fir-763d5.firebaseapp.com
+DATABASE_URL: https://fir-763d5-default-rtdb.firebaseio.com/
+PROJECT_ID: fir-763d5
+STORAGE_BUCKET: fir-763d5.firebasestorage.app
+SENDER_ID: 426798891929
+APP_ID: 1:426798891929:web:02383a7f9807f783054908
 
 plugins:
   - jekyll-sitemap
