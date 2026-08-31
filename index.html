@@ -147,6 +147,16 @@ function playGame(gameName, betAmount = 1000) {
 }
 </style>
 
+<!-- Header dengan Login/Logout -->
+<div style="background: #667eea; padding: 15px; color: white; display: flex; justify-content: space-between; align-items: center;">
+    <h1 style="margin: 0;">🎰 Demo Slot</h1>
+    <div>
+        <span id="userBalanceDisplay">💰 Rp 0</span>
+        <button onclick="demoLogin()" id="loginBtn" style="background: white; border: none; padding: 8px 20px; border-radius: 8px; margin-left: 10px; cursor: pointer;">Login</button>
+        <button onclick="logout()" id="logoutBtn" style="background: rgba(255,255,255,0.2); border: none; padding: 8px 20px; border-radius: 8px; color: white; margin-left: 10px; cursor: pointer; display: none;">Logout</button>
+    </div>
+</div>
+
 <div class="grid-container">
   {% for item in site.data.slots %}
   <ion-card class="border-card post">
